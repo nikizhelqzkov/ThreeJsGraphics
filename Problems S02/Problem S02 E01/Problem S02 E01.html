@@ -1,0 +1,88 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+			// Задача: махнете големия куб и сложете 8 малки
+			// кубчета във върховете на въображаем голям куб
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var scene = new THREE.Scene();
+			
+			var camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 1000 );
+			camera.position.set(3,3,8);
+			camera.lookAt(new THREE.Vector3(0,0,0));
+
+			var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
+
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(1,1, -1);
+			scene.add( cube );
+
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(1,-1, 1);
+			scene.add( cube );
+
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(-1,1, 1);
+			scene.add( cube );
+
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(-1,-1, 1);
+			scene.add( cube );
+
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(1,1, 1);
+			scene.add( cube );
+
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(1,-1, -1);
+			scene.add( cube );
+
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(-1,1, -1);
+			scene.add( cube );
+
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(1,-1, -1);
+			scene.add( cube );
+
+
+		
+
+			// две светлини - отпред и отзад на сцената
+			var light = new THREE.PointLight( );
+			light.position.set(3,4,5);
+			scene.add( light );
+			light = new THREE.PointLight( );
+			light.position.set(-3,4,-5);
+			scene.add( light );
+
+			// въртене на сцената като в микровълнова фурна
+			function drawFrame()
+			{
+				requestAnimationFrame( drawFrame );
+				scene.rotation.y += 0.005;
+				renderer.render( scene, camera );
+			}
+			
+			drawFrame();
+		</script>
+	</body>
+</html>
