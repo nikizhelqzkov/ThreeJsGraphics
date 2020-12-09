@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+	<script src="three.min.js"></script>
+	<style>
+		body {
+			color: black;
+			text-shadow: 0 0 3px gray;
+			text-align: center;
+			font-family: Calibri;
+
+		}
+
+		label {
+			cursor: default;
+			margin: 0 1em;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Въведете ф.н, група, имена + заглавие на домашното -->
+	<h1>
+		ф.н. 82022 &ndash; група 1 &ndash; Николай Желязков<br>
+		Подготовка за Нова година от Роботския Ансамбъл
+	</h1>
+	<h2>Мъжете са хванати за колан</h2>
+	<audio autoplay loop>
+		<source src="DunavskoHoro.mp3">
+	</audio>
+
+	<script src="human.js"></script>
+	<script>
+		colors[2] = "crimson";
+		let girls = [new Female(), new Female(), new Female(), new Female(), new Female(), new Female()];
+		let girlsZ = 0;
+		for (let i = 0; i < girls.length; ++i) {
+			girls[i].position.y = 2;
+			girls[i].position.x = -20;
+			girls[i].position.z = girlsZ;
+			girlsZ += 17;
+		}
+
+
+		colors[2] = 'black';
+		let people = [new Male(), new Male(), new Male(), new Male(), new Male(), new Male()];
+
+
+		let pozZ = 0;
+		for (let i = 0; i < people.length; ++i) {
+			people[i].position.y = 2;
+			people[i].position.z = pozZ;
+			people[i].position.x = -60;
+
+			pozZ += 20;
+		}
+
+		function recolor(joint, color, secondColor = color) {
+			joint = joint.userJoint.children[0];
+
+			var mainPart = joint.children[0];
+			mainPart.material.color = color;
+
+			if (joint.children.length > 1) {
+				var jointPart = joint.children[1];
+				jointPart.material = jointPart.material.clone();
+				jointPart.material.color = secondColor;
+			}
+		}
+
+		function animate(t) {
+
+
+			for (let i = 0; i < girls.length; ++i) {
+				girls[i].r_knee.bend(70 + 65 * sin(5 * t));
+				girls[i].l_knee.bend(70 - 65 * sin(5 * t));
+				girls[i].r_leg.bend(-5 * sin(5 * t));
+				girls[i].l_leg.bend(5 * sin(5 * t));
+				girls[i].position.y = 5 + 3 * sin(10 * t);
+				girls[i].rotation.y = rad(180);
+
+				girls[i].l_arm.straddle(4, LEFT);
+				girls[i].r_arm.straddle(4, RIGHT);
+
+				girls[i].r_arm.raise(65 * sin(5 * t));
+				girls[i].l_arm.raise(65 * sin(5 * t));
+				girls[i].l_wrist.turn(0, RIGHT);
+				girls[i].r_wrist.turn(180, LEFT);
+				girls[i].r_fingers.bend(-10);
+				girls[i].l_fingers.bend(-10);
+
+				recolor(girls[i].l_arm, new THREE.Color('white'));
+				recolor(girls[i].l_elbow, new THREE.Color('white'));
+				recolor(girls[i].r_arm, new THREE.Color('white'));
+				recolor(girls[i].r_elbow, new THREE.Color('white'));
+				recolor(girls[i].torso, new THREE.Color('white'));
+
+				recolor(girls[i].l_knee, new THREE.Color('white'));
+				recolor(girls[i].r_knee, new THREE.Color('white'));
+				recolor(girls[i].l_leg, new THREE.Color('crimson'));
+				recolor(girls[i].r_leg, new THREE.Color('crimson'));
+				
+
+			}
+			people[0].l_knee.bend(80 + 65 * sin(5 * t));
+			people[0].l_leg.bend(70 + 65 * sin(5 * t));
+
+
+			people[0].r_knee.bend(80 - 65 * sin(5 * t));
+			people[0].r_leg.bend(70 - 65 * sin(5 * t));
+			people[0].position.y = 5 + 3 * sin(10 * t);
+
+
+			people[0].r_arm.straddle(30, RIGHT);
+			people[0].r_arm.raise(10);
+			people[0].l_arm.raise(65 * sin(5 * t));
+			recolor(people[0].l_arm, new THREE.Color('white'));
+			recolor(people[0].l_elbow, new THREE.Color('white'));
+			recolor(people[0].r_arm, new THREE.Color('white'));
+			recolor(people[0].r_elbow, new THREE.Color('white'));
+			recolor(people[0].torso, new THREE.Color('brown'));
+			recolor(people[0].l_knee, new THREE.Color('black'));
+			recolor(people[0].r_knee, new THREE.Color('black'));
+			recolor(people[0].l_leg, new THREE.Color('black'));
+			recolor(people[0].r_leg, new THREE.Color('black'));
+
+			people[people.length - 1].l_knee.bend(80 + 65 * sin(5 * t));
+			people[people.length - 1].l_leg.bend(70 + 65 * sin(5 * t));
+
+
+			people[people.length - 1].r_knee.bend(80 - 65 * sin(5 * t));
+			people[people.length - 1].r_leg.bend(70 - 65 * sin(5 * t));
+			people[people.length - 1].position.y = 5 + 3 * sin(10 * t);
+
+
+			people[people.length - 1].l_arm.straddle(30, LEFT);
+			people[people.length - 1].l_arm.raise(-10);
+			people[people.length - 1].r_arm.raise(65 * sin(5 * t));
+
+			recolor(people[people.length - 1].l_arm, new THREE.Color('white'));
+			recolor(people[people.length - 1].l_elbow, new THREE.Color('white'));
+			recolor(people[people.length - 1].r_arm, new THREE.Color('white'));
+			recolor(people[people.length - 1].r_elbow, new THREE.Color('white'));
+			recolor(people[people.length - 1].torso, new THREE.Color('brown'));
+			recolor(people[people.length - 1].l_knee, new THREE.Color('black'));
+			recolor(people[people.length - 1].r_knee, new THREE.Color('black'));
+			recolor(people[people.length - 1].l_leg, new THREE.Color('black'));
+			recolor(people[people.length - 1].r_leg, new THREE.Color('black'));
+
+			for (let i = 1; i < people.length - 1; i++) {
+				people[i].l_knee.bend(80 + 65 * sin(5 * t));
+				people[i].l_leg.bend(70 + 65 * sin(5 * t));
+
+
+				people[i].r_knee.bend(80 - 65 * sin(5 * t));
+				people[i].r_leg.bend(70 - 65 * sin(5 * t));
+				people[i].position.y = 5 + 3 * sin(10 * t);
+
+				people[i].l_arm.straddle(30, LEFT);
+				people[i].r_arm.straddle(30, RIGHT);
+				people[i].r_arm.raise(10);
+				people[i].l_arm.raise(-10);
+
+				recolor(people[i].l_arm, new THREE.Color('white'));
+				recolor(people[i].l_elbow, new THREE.Color('white'));
+				recolor(people[i].r_arm, new THREE.Color('white'));
+				recolor(people[i].r_elbow, new THREE.Color('white'));
+				recolor(people[i].torso, new THREE.Color('brown'));
+				recolor(people[i].l_knee, new THREE.Color('black'));
+				recolor(people[i].r_knee, new THREE.Color('black'));
+				recolor(people[i].l_leg, new THREE.Color('black'));
+				recolor(people[i].r_leg, new THREE.Color('black'));
+			}
+
+			scene.rotation.y = t / 500;
+			scene.position.x = 20;
+
+		}
+
+
+
+
+
+
+	</script>
+</body>
+
+</html>
